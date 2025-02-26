@@ -55,7 +55,7 @@ def username():
     if uname is None or uname.strip() == "None":  # Check if uname is None
         uname = "User"
     Speak(f"Hello Mister {uname}")
-    columns = shutil.get_terminal_size().columns
+    columns = shutil.get_terminal_size().columns     # we can remove this if not necessary
     print("#################".center(columns))
     print(f"Welcome Mr. {uname}".center(columns))
     print("#################".center(columns))
