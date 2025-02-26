@@ -30,10 +30,6 @@ voices = engine.getProperty('voices')
 
 engine.setProperty('voice', voices[1].id)
 
-# Speak a sample text
-# engine.say("Hi Jainil how are you?")
-# engine.runAndWait()
-
 def Speak(audio):
     engine.say(audio)
     engine.runAndWait()
@@ -59,7 +55,6 @@ def username():
     if uname is None or uname.strip() == "None":  # Check if uname is None
         uname = "User"
     Speak(f"Hello Mister {uname}")
-    Speak(uname)
     columns = shutil.get_terminal_size().columns
     print("#################".center(columns))
     print("Welcome Mr.",uname.center(columns))
