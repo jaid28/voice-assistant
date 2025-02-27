@@ -1,0 +1,13 @@
+wolframalpha
+pyttsx3
+speechRecognition 
+datetime
+wikipedia
+winshell
+pyjokes
+feedparser
+requests
+twilio
+clint
+ecapture
+pywin32
