@@ -68,18 +68,18 @@ def takeCommand():
     with sr.Microphone() as source:
          
         print("Listening...")
-        r.pause_threshold = 1
-        audio = r.listen(source)
-
-    try:
-        print("Recognizing")
-        query = r.recognize_google(audio, language = 'en-in')
-        print(f"User said: {query}\n")
-
-    except Exception as e:
-        print(e)
-        print("Unable to recognize your voice")
-        return None
+        r.pause_threshold = 2
+        try:            
+            audio = r.listen(source, timeout=5)
+            print("Recognizing")
+            query = r.recognize_google(audio, language = 'en-in')
+            print(f"User said: {query}\n")
+            return query.lower()
+        except sr.UnknownValueError:
+            print("Unable to recognize your voice")
+            return None
+        except sr.RequestError:
+            print("Google API is not connected")
 
     return query
 
