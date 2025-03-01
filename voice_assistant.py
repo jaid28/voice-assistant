@@ -27,10 +27,10 @@ from urllib.request import urlopen
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
-
 engine.setProperty('voice', voices[1].id)
 
 def Speak(audio):
+    print(f"Speaking {audio}")
     engine.say(audio)
     engine.runAndWait()
 
@@ -48,17 +48,15 @@ def WishMe():
     Speak("I am you assistant")
     Speak(assname)
 
-
 def username():
     Speak("What should I call you sir")
     uname = takeCommand()
     if uname is None or uname.strip() == "None":  # Check if uname is None
         uname = "User"
     Speak(f"Hello Mister {uname}")
-    columns = shutil.get_terminal_size().columns     # we can remove this if not necessary
-    print("#################".center(columns))
-    print(f"Welcome Mr. {uname}".center(columns))
-    print("#################".center(columns))
+    print("#################".center(100))
+    print(f"Welcome Mr. {uname}".center(100))
+    print("#################".center(100))
     
     Speak("How can I help you sir")
 
@@ -68,9 +66,9 @@ def takeCommand():
     with sr.Microphone() as source:
          
         print("Listening...")
-        r.pause_threshold = 2
+        r.pause_threshold = 0.5
         try:            
-            audio = r.listen(source, timeout=5)
+            audio = r.listen(source, timeout= 3)
             print("Recognizing")
             query = r.recognize_google(audio, language = 'en-in')
             print(f"User said: {query}\n")
@@ -92,9 +90,14 @@ def sendEmail(to, content):
     server.sendmail('your email id', to, content)
     server.close()
 
+# while True:
+#     query = takeCommand()
+#     if query is None:
+#         continue  # Keep listening if no valid input
+#     query = query.lower()
+
 if __name__ == "__main__":
     clear = lambda: os.system('cls')
-    clear()
     WishMe()
     username()
 
@@ -104,6 +107,31 @@ if __name__ == "__main__":
             query = ""  # Set default empty string to prevent errors
 
         query = query.lower() 
+
+        if 'send email' in query:
+            try:
+                Speak("To whom should I send the email: ")
+                recipient = takeCommand().lower()
+            
+                email_dict = {
+                    'jai': 'jai@gmail.com',
+                    'radha': 'radha@gmail.com'
+                }
+
+                if recipient in email_dict:
+                    to = email_dict[recipient]
+                else:
+                    Speak("I don't have this contact. Please provide an email address.")
+                    to = takeCommand().lower()
+
+                Speak("What should I write in the email?")
+                content = takeCommand()
+                sendEmail(to, content)
+                Speak("Email has been sent successfully.")
+        
+            except Exception as e:
+                print(e)
+                Speak("Sorry, I was unable to send the email.")
 
         if "exit" in query or "stop" in query or "quit" in query:
             print("Goodbye! Have a great day! 😊")
@@ -245,9 +273,9 @@ if __name__ == "__main__":
                                                        0)
             Speak("Background changed successfully")
  
-        elif 'open bluestack' in query:
-            appli = r"C:\\ProgramData\\BlueStacks\\Client\\Bluestacks.exe"
-            os.startfile(appli)
+        # elif 'open bluestack' in query:
+        #     appli = r"C:\\ProgramData\\BlueStacks\\Client\\Bluestacks.exe"
+        #     os.startfile(appli)
  
         elif 'news' in query:
              
@@ -407,7 +435,7 @@ if __name__ == "__main__":
             Speak("I'm fine, glad you me that")
  
         elif "i love you" in query:
-            Speak("It's hard to understand")
+            Speak(f"I Love you 2 {uname}. But why you like me")
  
         elif "what is" in query or "who is" in query:
              
