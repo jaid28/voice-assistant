@@ -1,6 +1,6 @@
 wolframalpha
 pyttsx3
-speechRecognition 
+speechRecognition
 datetime
 wikipedia
 winshell
